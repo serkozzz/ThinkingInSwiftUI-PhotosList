@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct PhotosListApp: App {
+    @StateObject var photosListViewModel = PhotosListViewModel()
     var body: some Scene {
         WindowGroup {
-            PhotosListView()
+            PhotosListView(viewModel: PhotosListViewModel())
         }
     }
 }

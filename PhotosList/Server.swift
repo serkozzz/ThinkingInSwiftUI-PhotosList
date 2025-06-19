@@ -5,7 +5,7 @@
 //  Created by Sergey Kozlov on 17.06.2025.
 //
 
-import Foundation
+import SwiftUI
 
 class Server {
     private let listUrl =  "https://picsum.photos/v2/list"
@@ -13,7 +13,7 @@ class Server {
     func photosList() async throws -> [PhotoMetadata] {
         
         let url = URL(string: listUrl)!
-        let responseString = try await getRequestForJson(url: url)
+        let responseString = try await requestJson(url: url)
         
         let jsonData = responseString.data(using: .utf8)!
         
@@ -27,10 +27,14 @@ class Server {
         }
     }
     
-    private func getRequestForJson(url: URL) async throws -> String {
+    
+    func photo(urlStr: String) async throws -> UIImage {
+        try await requestImage(url: URL(string: urlStr)!)
+    }
+    
+    private func requestJson(url: URL) async throws -> String {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let (data, response) = try await urlSession().data(for: request)
         
@@ -49,6 +53,29 @@ class Server {
             throw URLError(.cannotDecodeContentData)
         }
         return responseString
+    }
+    
+    private func requestImage(url: URL) async throws -> UIImage {
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        let (data, response) = try await urlSession().data(for: request)
+        
+        if let httpResponse = response as? HTTPURLResponse {
+            print("📡 Status code: \(httpResponse.statusCode)")
+        }
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            print(String(data: data, encoding: .utf8) ?? "")
+            throw URLError(.badServerResponse)
+        }
+        
+        guard let image = UIImage(data: data) else {
+            print("❌ Failed to convert data to UIImage.")
+            throw URLError(.cannotDecodeContentData)
+        }
+        return image
     }
     
     

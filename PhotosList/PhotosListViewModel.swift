@@ -10,7 +10,7 @@ import SwiftUI
 @MainActor
 class PhotosListViewModel: ObservableObject {
     @Published var isLoading: Bool
-    @Published var error: ErrorWrapper?
+    @Published var error: IdentifiableError?
     
     @Published var photos: [PhotoMetadata] = []
     
@@ -22,7 +22,7 @@ class PhotosListViewModel: ObservableObject {
                 isLoading = false
             }
             catch (let error) {
-                self.error = ErrorWrapper(error: error)
+                self.error = IdentifiableError(error: error)
                 isLoading = false
             }
         }

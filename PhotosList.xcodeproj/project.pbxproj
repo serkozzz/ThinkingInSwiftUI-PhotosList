@@ -14,7 +14,9 @@
 		9D0BD3B32E00FB9B0029DBBB /* PhotosListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0BD3AE2E00FB9B0029DBBB /* PhotosListApp.swift */; };
 		9D0BD3B52E00FBAB0029DBBB /* PhotoMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0BD3B42E00FBA50029DBBB /* PhotoMetadata.swift */; };
 		9D0BD3B72E0100B90029DBBB /* PhotosListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0BD3B62E0100AF0029DBBB /* PhotosListViewModel.swift */; };
-		9D0BD3B92E0106310029DBBB /* ErrorWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0BD3B82E01062D0029DBBB /* ErrorWrapper.swift */; };
+		9D0BD3B92E0106310029DBBB /* IdentifiableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0BD3B82E01062D0029DBBB /* IdentifiableError.swift */; };
+		9D0BD3BD2E0252280029DBBB /* PhotoDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0BD3BC2E0252280029DBBB /* PhotoDetailsView.swift */; };
+		9D0BD3C22E0477270029DBBB /* PhotoDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0BD3C12E04771E0029DBBB /* PhotoDetailsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,7 +28,9 @@
 		9D0BD3AE2E00FB9B0029DBBB /* PhotosListApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosListApp.swift; sourceTree = "<group>"; };
 		9D0BD3B42E00FBA50029DBBB /* PhotoMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoMetadata.swift; sourceTree = "<group>"; };
 		9D0BD3B62E0100AF0029DBBB /* PhotosListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosListViewModel.swift; sourceTree = "<group>"; };
-		9D0BD3B82E01062D0029DBBB /* ErrorWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorWrapper.swift; sourceTree = "<group>"; };
+		9D0BD3B82E01062D0029DBBB /* IdentifiableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableError.swift; sourceTree = "<group>"; };
+		9D0BD3BC2E0252280029DBBB /* PhotoDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailsView.swift; sourceTree = "<group>"; };
+		9D0BD3C12E04771E0029DBBB /* PhotoDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,14 +71,16 @@
 		9D0BD3AF2E00FB9B0029DBBB /* PhotosList */ = {
 			isa = PBXGroup;
 			children = (
-				9D0BD3B82E01062D0029DBBB /* ErrorWrapper.swift */,
+				9D0BD3B82E01062D0029DBBB /* IdentifiableError.swift */,
 				9D0BD3A82E00FB610029DBBB /* Server.swift */,
 				9D0BD3B42E00FBA50029DBBB /* PhotoMetadata.swift */,
 				9D0BD3AB2E00FB9B0029DBBB /* Preview Content */,
 				9D0BD3AC2E00FB9B0029DBBB /* Assets.xcassets */,
-				9D0BD3AD2E00FB9B0029DBBB /* PhotosListView.swift */,
-				9D0BD3B62E0100AF0029DBBB /* PhotosListViewModel.swift */,
 				9D0BD3AE2E00FB9B0029DBBB /* PhotosListApp.swift */,
+				9D0BD3B62E0100AF0029DBBB /* PhotosListViewModel.swift */,
+				9D0BD3AD2E00FB9B0029DBBB /* PhotosListView.swift */,
+				9D0BD3C12E04771E0029DBBB /* PhotoDetailsViewModel.swift */,
+				9D0BD3BC2E0252280029DBBB /* PhotoDetailsView.swift */,
 			);
 			path = PhotosList;
 			sourceTree = "<group>";
@@ -152,12 +158,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D0BD3B92E0106310029DBBB /* ErrorWrapper.swift in Sources */,
+				9D0BD3B92E0106310029DBBB /* IdentifiableError.swift in Sources */,
 				9D0BD3B22E00FB9B0029DBBB /* PhotosListView.swift in Sources */,
+				9D0BD3C22E0477270029DBBB /* PhotoDetailsViewModel.swift in Sources */,
 				9D0BD3B52E00FBAB0029DBBB /* PhotoMetadata.swift in Sources */,
 				9D0BD3B72E0100B90029DBBB /* PhotosListViewModel.swift in Sources */,
 				9D0BD3B32E00FB9B0029DBBB /* PhotosListApp.swift in Sources */,
 				9D0BD3A92E00FB660029DBBB /* Server.swift in Sources */,
+				9D0BD3BD2E0252280029DBBB /* PhotoDetailsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
