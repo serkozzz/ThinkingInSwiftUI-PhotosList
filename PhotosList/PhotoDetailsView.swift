@@ -19,7 +19,8 @@ struct PhotoDetailsView: View {
     var body: some View {
         VStack {
             if (viewModel.isLoading) {
-                Text("Loading...")
+                ProgressView("Loading...")
+                    .scaleEffect(1.5)
             }
             else {
                 Image(uiImage: viewModel.image!)

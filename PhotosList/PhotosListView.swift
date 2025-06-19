@@ -15,7 +15,8 @@ struct PhotosListView: View {
         NavigationStack {
             VStack {
                 if (viewModel.isLoading) {
-                    Text("Loading...")
+                    ProgressView("Loading...")
+                        .scaleEffect(1.5)
                 }
                 else {
                     List() {
