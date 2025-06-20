@@ -27,18 +27,7 @@ struct PhotosListView: View {
                             NavigationLink {
                                 PhotoDetailsView(urlStr: url)
                             } label: {
-                                HStack {
-                                    Text(photo.author)
-                                    Spacer()
-                                    if let preview = previews[url] {
-                                        Image(uiImage: preview)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                    }
-                                    else {
-                                        ProgressView()
-                                    }
-                                }
+                                CellView(image: previews[url], text: photo.author)
                                 .frame(height: 100)
                             }
                             .onAppear {
@@ -63,8 +52,21 @@ struct PhotosListView: View {
 
 private struct CellView: View {
     
+    var image: UIImage?
+    var text: String
     var body: some View {
-        Text("")
+        HStack {
+            Text(text)
+            Spacer()
+            if let image {
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            }
+            else {
+                ProgressView()
+            }
+        }
     }
 }
 
@@ -72,3 +74,4 @@ private struct CellView: View {
     @Previewable @StateObject var photosVM = PhotosListViewModel()
     PhotosListView(viewModel: photosVM)
 }
+
