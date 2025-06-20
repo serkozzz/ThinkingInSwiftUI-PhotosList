@@ -11,6 +11,8 @@ struct PhotosListView: View {
     
     @ObservedObject var viewModel: PhotosListViewModel
     
+    @State var previews: [String: UIImage] = [:]
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -21,13 +23,32 @@ struct PhotosListView: View {
                 else {
                     List() {
                         ForEach(viewModel.photos) { photo in
+                            let url = photo.download_url
                             NavigationLink {
-                                PhotoDetailsView(urlStr: photo.download_url)
+                                PhotoDetailsView(urlStr: url)
                             } label: {
-                                Text(photo.author)
+                                HStack {
+                                    Text(photo.author)
+                                    Spacer()
+                                    if let preview = previews[url] {
+                                        Image(uiImage: preview)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                    }
+                                    else {
+                                        ProgressView()
+                                    }
+                                }
+                                .frame(height: 100)
+                            }
+                            .onAppear {
+                                Task {
+                                    previews[url] = try? await Server().photo(urlStr: photo.download_url)
+                                }
                             }
                         }
                     }
+                    
                     .padding()
                 }
             }
@@ -37,6 +58,13 @@ struct PhotosListView: View {
             .navigationTitle("Photos")
         }
         
+    }
+}
+
+private struct CellView: View {
+    
+    var body: some View {
+        Text("")
     }
 }
 

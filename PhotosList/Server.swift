@@ -10,6 +10,8 @@ import SwiftUI
 class Server {
     private let listUrl =  "https://picsum.photos/v2/list"
     
+    static private var photosCache = ImageCache()
+
     func photosList() async throws -> [PhotoMetadata] {
         
         let url = URL(string: listUrl)!
@@ -26,10 +28,14 @@ class Server {
             ])
         }
     }
-    
-    
+
     func photo(urlStr: String) async throws -> UIImage {
-        try await requestImage(url: URL(string: urlStr)!)
+        if let cachedImage = await Server.photosCache.get(for: urlStr) {
+            return cachedImage
+        }
+        let image = try await requestImage(url: URL(string: urlStr)!)
+        await Server.photosCache.set(image, for: urlStr)
+        return image
     }
     
     private func requestJson(url: URL) async throws -> String {
