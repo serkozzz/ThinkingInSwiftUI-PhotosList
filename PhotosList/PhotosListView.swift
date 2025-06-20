@@ -11,8 +11,6 @@ struct PhotosListView: View {
     
     @ObservedObject var viewModel: PhotosListViewModel
     
-    @State var previews: [String: UIImage] = [:]
-    
     var body: some View {
         NavigationStack {
             VStack {
@@ -23,17 +21,11 @@ struct PhotosListView: View {
                 else {
                     List() {
                         ForEach(viewModel.photos) { photo in
-                            let url = photo.download_url
                             NavigationLink {
-                                PhotoDetailsView(urlStr: url)
+                                PhotoDetailsView(urlStr: photo.download_url)
                             } label: {
-                                CellView(image: previews[url], text: photo.author)
+                                CellView(photo: photo)
                                 .frame(height: 100)
-                            }
-                            .onAppear {
-                                Task {
-                                    previews[url] = try? await Server().photo(urlStr: photo.download_url)
-                                }
                             }
                         }
                     }
@@ -52,11 +44,16 @@ struct PhotosListView: View {
 
 private struct CellView: View {
     
-    var image: UIImage?
-    var text: String
+    @State var image: UIImage?
+    private let photo: PhotoMetadata
+    
+    init(photo: PhotoMetadata) {
+        self.photo = photo
+    }
+    
     var body: some View {
         HStack {
-            Text(text)
+            Text(photo.author)
             Spacer()
             if let image {
                 Image(uiImage: image)
@@ -66,6 +63,14 @@ private struct CellView: View {
             else {
                 ProgressView()
             }
+        }
+        .onAppear {
+            Task {
+                image = try? await Server.shared.photo(urlStr: photo.download_url)
+            }
+        }
+        .onDisappear {
+            Server.shared.cancelPhotoRequest(urlStr: photo.download_url)
         }
     }
 }

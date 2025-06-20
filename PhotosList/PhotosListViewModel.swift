@@ -18,7 +18,7 @@ class PhotosListViewModel: ObservableObject {
         isLoading = true
         Task() {
             do {
-                self.photos = try await Server().photosList()
+                self.photos = try await Server.shared.photosList()
                 isLoading = false
             }
             catch (let error) {

@@ -22,7 +22,7 @@ class PhotoDetailsViewModel: ObservableObject {
     func loadPhoto() async {
         isLoading = true
         do {
-            image = try await Server().photo(urlStr: url)
+            image = try await Server.shared.photo(urlStr: url)
             isLoading = false
         }
         catch (let err){
