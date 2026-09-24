@@ -15,19 +15,19 @@ class AlbumViewModel: ObservableObject {
     
     private var picturesService = PicturesService()
     
-    func load() {
-        Task {
-            do {
-                items = try await picturesService.getPicturesList().map {
-                    AlbumItemViewModel(dto: $0, picturesServise: picturesService)
-                }
-            }
-            catch let error as ServerAPIError {
-                errorMessage = error
+    func load() async {
+        do {
+            items = try await picturesService.getPicturesList().map {
+                AlbumItemViewModel(dto: $0, picturesServise: picturesService)
             }
         }
+        catch let error as ServerAPIError {
+            errorMessage = error
+        }
+        catch {
+            errorMessage = .unknown
+        }
     }
-    
 }
 
 @MainActor
@@ -54,15 +54,13 @@ class AlbumItemViewModel: ObservableObject, Identifiable {
         dto.id
     }
     
-    func loadImage() {
-        Task {
-            do {
-                self.icon = try await picturesService.getIcon(for: dto)
-            }
-            catch let error as ServerAPIError {
-                self.error = error
-            }
+    func loadImage() async {
+        
+        do {
+            self.icon = try await picturesService.getIcon(for: dto)
         }
-    
+        catch  {
+            self.error = error as? ServerAPIError ?? .unknown
+        }
     }
 }

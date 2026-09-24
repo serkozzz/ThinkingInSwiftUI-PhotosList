@@ -40,12 +40,19 @@ class ServerAPI {
             guard let response = response as? HTTPURLResponse else {
                 throw ServerAPIError.unknown
             }
+            try Task.checkCancellation()
+
             guard (200..<300).contains(response.statusCode) else {
                 throw ServerAPIError.from(
                     statusCode: response.statusCode
                 )
             }
             return data
+        }
+        catch is CancellationError {
+            throw ServerAPIError.cancellation
+        } catch let error as URLError where error.code == .cancelled {
+            throw ServerAPIError.cancellation
         }
         catch let error as ServerAPIError{
             throw error

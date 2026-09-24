@@ -15,8 +15,8 @@ struct AlbumView: View {
         List(viewModel.items) {
             AlbumItemView(item: $0)
         }
-        .onAppear() {
-            viewModel.load()
+        .task() {
+            await viewModel.load()
         }
         .alert(item: $viewModel.errorMessage) {
             Alert(title: Text($0.rawValue))
@@ -49,13 +49,7 @@ struct AlbumItemView: View {
 //            }
         }
         .task {
-            item.loadImage()
+            await item.loadImage()
         }
     }
 }
-
-
-//                    if let icon = item.icon {
-//                        Image(uiImage: icon).resizable().aspectRatio(contentMode: .fit)
-//                            .frame(width: 200, height: 200)
-//                    }

@@ -14,6 +14,7 @@ enum ServerAPIError: String, Identifiable {
     case invalidJSON
     case invalidImageData
     case invalidURL
+    case cancellation
     case explicitMaterialsError //just for example
     
     var id: String {

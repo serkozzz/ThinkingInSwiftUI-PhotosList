@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 class PicturesService {
     private let serverAPI = ServerAPI()
     
